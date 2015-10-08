@@ -1,0 +1,20 @@
+---
+- name: install ntp
+  yum:
+    name: ntp
+    state: installed
+  when: ntpd_enabed|bool
+
+- name: ensure ntp is running and enabled
+  service:
+    name: ntpd
+    state: started
+    enabled: yes
+  when: ntpd_enabed|bool
+
+- name: ensure ntp is not running or enabled
+  service:
+    name: ntpd
+    state: stopped
+    enabled: no
+  when: ! ntpd_enabed|bool
